@@ -8,3 +8,6 @@
 
 # let system know programs installed by brew, from this mac setup guide -> https://sourabhbajaj.com/mac-setup/Homebrew/
 export PATH="/usr/local/bin:$PATH"
+
+# Add Visual Studio Codes
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
