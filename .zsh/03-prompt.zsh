@@ -43,7 +43,7 @@ function assemble_prompt() {
 
         echo ${GIT_PROMPT}
     else
-        local NORMAL_PROMPT="$GREY%~"
+        local NORMAL_PROMPT="$GREY%1d"
         echo $NORMAL_PROMPT
     fi
 }
