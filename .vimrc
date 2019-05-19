@@ -46,6 +46,8 @@ set cindent
 set showcmd
 syntax on
 
+set backspace=indent,eol,start
+
 " Auto closing braces, brackets, parentheses and quotes
 imap ( ()<Esc>i
 inoremap ( ()<Esc>i
