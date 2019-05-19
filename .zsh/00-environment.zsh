@@ -11,3 +11,7 @@ export PATH="/usr/local/bin:$PATH"
 
 # Add Visual Studio Codes
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+# Add Ruby brew
+export PATH=/usr/local/opt/ruby/bin:$PATH
+
