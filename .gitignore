@@ -29,7 +29,7 @@
 .tooling
 .vim 
 .viminfo
-.vscode
+.vscode-oss
 .webclipse 
 .zsh_history
 Applications
