@@ -7,6 +7,7 @@
 # description: defining simple prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
 COMMAND_BEGIN=\$
+FEATURED=%m
 
 function relative_time_since_last_commit {
     local relative_time=`git log --pretty=format:'%ar' -n 1`
@@ -51,5 +52,5 @@ function assemble_prompt() {
 }
 
 function precmd() {
-    PS1="$YELLOW%m$NORMAL:$(assemble_prompt) $YELLOW$COMMAND_BEGIN$NORMAL "
+    PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt) $YELLOW$COMMAND_BEGIN$NORMAL "
 }
