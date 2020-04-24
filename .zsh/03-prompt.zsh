@@ -7,7 +7,7 @@
 # description: defining simple prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
 COMMAND_BEGIN=\$
-FEATURED=%m
+FEATURED=cumbuca
 
 function relative_time_since_last_commit {
     local relative_time=`git log --pretty=format:'%ar' -n 1`
