@@ -19,3 +19,6 @@ export PATH=/usr/local/opt/ruby/bin:$PATH
 export PATH="/usr/local/opt/qt/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/qt/lib"
 export CPPFLAGS="-I/usr/local/opt/qt/include"
+
+# Add all SSH keys to agent
+ssh-add -q .ssh/keys/private/*
