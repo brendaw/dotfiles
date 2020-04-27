@@ -6,6 +6,9 @@
 #
 # description: defining simple prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
+# Prompt with compact mode on default
+PS1=\>
+
 # Main prompt config
 FEATURED=%m
 CURRENT_FOLDER=%1d
@@ -19,6 +22,9 @@ SIX_HOURS=360
 GIT_BEGIN=\(
 GIT_END=\)
 GIT_AT=\ at\ 
+
+# Mode prompt config
+MODE_COMPACT_FILE="$HOME/.bin/prompt.d/mode.compact"
 
 # Datetime prompt config
 DATETIME_BEGIN=\[
@@ -35,13 +41,13 @@ function assemble_datetime {
     current_time=`date $TIME_IN_24_HOURS_HH_MM_FORMAT`
 
     if [[ -f "$DATE_ON_FILE" && -f "$TIME_ON_FILE" ]]; then
-        echo "$NORMAL $DATETIME_BEGIN${current_date} ${current_time}$DATETIME_END "
+        echo "$NORMAL$DATETIME_BEGIN${current_date} ${current_time}$DATETIME_END "
     elif [ -f "$DATE_ON_FILE" ]; then
-        echo "$NORMAL $DATETIME_BEGIN${current_date}$DATETIME_END "
+        echo "$NORMAL$DATETIME_BEGIN${current_date}$DATETIME_END "
     elif [ -f "$TIME_ON_FILE" ]; then
-        echo "$NORMAL $DATETIME_BEGIN${current_time}$DATETIME_END "
+        echo "$NORMAL$DATETIME_BEGIN${current_time}$DATETIME_END "
     else
-        echo " "
+        echo ""
     fi
 }
 
@@ -59,7 +65,7 @@ function minutes_since_last_commit {
     echo $minutes_since_last_commit
 }
 
-function assemble_prompt() {
+function assemble_prompt {
     local inside_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
     
     local git_repo_folder="$(git rev-parse --show-toplevel 2>/dev/null)"
@@ -77,15 +83,25 @@ else
         fi
 
         local SINCE_LAST_COMMIT="${COLOR}$(relative_time_since_last_commit)${NORMAL}"
-        local GIT_PROMPT="$GREY$git_repo_name $NORMAL$GIT_BEGIN${SINCE_LAST_COMMIT}$GIT_AT$(git rev-parse --abbrev-ref HEAD)$GIT_END"
+        local GIT_PROMPT="$GREY$git_repo_name $NORMAL$GIT_BEGIN${SINCE_LAST_COMMIT}$GIT_AT$(git rev-parse --abbrev-ref HEAD)$GIT_END "
 
         echo ${GIT_PROMPT}
     else
-        local NORMAL_PROMPT="$GREY$CURRENT_FOLDER"
+        local NORMAL_PROMPT="$GREY$CURRENT_FOLDER "
         echo $NORMAL_PROMPT
     fi
 }
 
+function assemble_mode {
+    if [ -f "$MODE_COMPACT_FILE" ]; then
+        PS1="$NORMAL$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
+    else
+        PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt)$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
+    fi
+}
+
 function precmd() {
-    export PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt)$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
+    assemble_mode
+
+    export PS1
 }
