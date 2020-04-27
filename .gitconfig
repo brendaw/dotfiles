@@ -1,0 +1,8 @@
+[user]
+	name = William Brendaw
+	email = williambrendaw@protonmail.com
+[credential]
+	helper = osxkeychain
+
+[includeIf "gitdir:~/Work/"]
+	path = ~/Work/.gitconfig
