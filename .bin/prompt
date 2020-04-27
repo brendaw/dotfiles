@@ -7,6 +7,7 @@ HELP_ARG="--help"
 
 CLOCK_COMMAND="clock"
 DATE_COMMAND="date"
+DATETIME_COMMAND="datetime"
 ON_OPTION="on"
 OFF_OPTION="off"
 
@@ -38,6 +39,8 @@ function check_args {
         clock $2
     elif [[ "$1" == "$DATE_COMMAND" ]]; then
         date $2
+    elif [[ "$1" == "$DATETIME_COMMAND" ]]; then
+        datetime $2
     else
         command_not_found $1
     fi
@@ -179,15 +182,55 @@ function date_help_message {
     echo -e "Type 'prompt --help' for more info."
 }
 
+function datetime {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        datetime_help_message
+    elif [[ "$1" == "$ON_OPTION" ]]; then
+        datetime_exec_on
+    elif [[ "$1" == "$OFF_OPTION" ]]; then
+        datetime_exec_off
+    elif [ -z "$1" ]; then
+        datetime_help_message
+    else
+        command_not_found $DATETIME_COMMAND $1
+    fi
+}
+
+function datetime_exec_on {
+    clock_exec_on
+    date_exec_on
+}
+
+function datetime_exec_off {
+    clock_exec_off
+    date_exec_off
+}
+
+function datetime_help_message {
+    echo -e "Toggle both clock and date, even if some of then is enabled or disabled.\n"
+    echo -e "Examples:"
+    echo -e "\t (without git info, clock and date) \t\tcumbuca:Downloads $"
+    echo -e "\t (without git info and with clock and date) \tcumbuca:Downloads [26-04-2020 23h43] $"
+    echo -e "\t (with git info and without clock and date) \tcumbuca:some-git-repository (10 minutes ago at master) $"
+    echo -e "\t (with git info, clock and date) \t\tcumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $\n"
+    echo -e "Usage: prompt datetime [on, off]\n"
+    echo -e "Available options:\n"
+    echo -e "\t on \tTo activate both clock and date on the prompt."
+    echo -e "\t off \tTo disable both clock and date on the prompt.\n"
+    echo -e "Type 'prompt --help' for more info."
+}
+
 function help_message {
     echo -e "Prompt enhancer with simple commands.\n"
     echo -e "Usage: prompt <command> [option]\n"
     echo -e "Available commands:\n"
-    echo -e "\t mode \tChoose if prompt enters in minimal, compact or full mode."
-    echo -e "\t date \tChoose if shows current date after user name and before clock, if enabled."
-    echo -e "\t clock \tChoose if shows current time after user name, or after date if enabled.\n"
+    echo -e "\t mode \t\tChoose if prompt enters in minimal, compact or full mode."
+    echo -e "\t date \t\tChoose if shows current date after user name and before clock, if enabled."
+    echo -e "\t clock \t\tChoose if shows current time after user name, or after date if enabled."
+    echo -e "\t datetime \tToggle both clock and date, even if some of then is enabled or disabled.\n"
     echo -e "Type 'prompt <command> --help' for more info."
 }
+
 
 function command_not_found {
     if [ -z "$2" ]; then
