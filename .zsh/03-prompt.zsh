@@ -29,7 +29,7 @@ function assemble_prompt() {
     local git_repo_folder="$(git rev-parse --show-toplevel 2>/dev/null)"
     local git_repo_name="$(echo ${git_repo_folder} | rev | cut -d/ -f1 | rev)"
     
-    if [ "$inside_git_repo" ] && [ "$git_repo_name" != "brendaw" ]; then
+    if [ "$inside_git_repo" ] && [ "$git_repo_name" != $USER ]; then
         local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
         
         if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 1440 ]; then
