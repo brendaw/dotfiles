@@ -26,6 +26,7 @@
 .mysql_history 
 .oracle_jre_usage
 .p2
+.psql_history
 .putty
 .ssh
 .sonarlint
