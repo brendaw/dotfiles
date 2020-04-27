@@ -6,11 +6,11 @@
 #
 # description: defining simple prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
-# Prompt with compact mode on default
-PS1=\>
 
 # Main prompt config
 FEATURED=%m
+WORK_DIR="Work"
+
 CURRENT_FOLDER=%1d
 COMMAND_BEGIN=\$
 
@@ -22,6 +22,9 @@ SIX_HOURS=360
 GIT_BEGIN=\(
 GIT_END=\)
 GIT_AT=\ at\ 
+
+GIT_NO_COMMITS="No commits"
+GIT_REPOSITORY="repository"
 
 # Mode prompt config
 MODE_COMPACT_FILE="$HOME/.bin/prompt.d/mode.compact"
@@ -71,21 +74,29 @@ function assemble_prompt {
     local git_repo_folder="$(git rev-parse --show-toplevel 2>/dev/null)"
     local git_repo_name="$(echo ${git_repo_folder} | rev | cut -d/ -f1 | rev)"
     
-    if [ "$inside_git_repo" ] && [ "$git_repo_name" != $USER ]; then
-        local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
-        
-        if [ "$MINUTES_SINCE_LAST_COMMIT" -gt "$ONE_DAY" ]; then
-            local COLOR=${RED}
-        elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt "$SIX_HOURS" ]; then
-            local COLOR=${YELLOW}
-else
-            local COLOR=${GREEN}
+    if [ "$inside_git_repo" ] && [ "$git_repo_name" != $USER ] && [ "$git_repo_name" != $WORK_DIR ]; then
+        local has_any_commit_in_repo="$(git rev-list -n 1 --all 2>/dev/null)"
+
+        if [ "$has_any_commit_in_repo" ]; then
+            local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
+            
+            if [ "$MINUTES_SINCE_LAST_COMMIT" -gt "$ONE_DAY" ]; then
+                local COLOR=${RED}
+            elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt "$SIX_HOURS" ]; then
+                local COLOR=${YELLOW}
+            else
+                local COLOR=${GREEN}
+            fi
+
+            local SINCE_LAST_COMMIT="${COLOR}$(relative_time_since_last_commit)${NORMAL}"
+            local GIT_PROMPT="$GREY$git_repo_name $NORMAL$GIT_BEGIN${SINCE_LAST_COMMIT}$GIT_AT$(git rev-parse --abbrev-ref HEAD)$GIT_END "
+
+            echo ${GIT_PROMPT}
+        else
+            local GIT_PROMPT="$GREY$git_repo_name $NORMAL$GIT_BEGIN$GIT_NO_COMMITS$GIT_AT$GIT_REPOSITORY$GIT_END "
+
+            echo ${GIT_PROMPT}
         fi
-
-        local SINCE_LAST_COMMIT="${COLOR}$(relative_time_since_last_commit)${NORMAL}"
-        local GIT_PROMPT="$GREY$git_repo_name $NORMAL$GIT_BEGIN${SINCE_LAST_COMMIT}$GIT_AT$(git rev-parse --abbrev-ref HEAD)$GIT_END "
-
-        echo ${GIT_PROMPT}
     else
         local NORMAL_PROMPT="$GREY$CURRENT_FOLDER "
         echo $NORMAL_PROMPT
