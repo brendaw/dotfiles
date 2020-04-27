@@ -20,17 +20,26 @@ GIT_BEGIN=\(
 GIT_END=\)
 GIT_AT=\ at\ 
 
-# Clock prompt config
-CLOCK_ON_FILE="$HOME/.bin/prompt.d/clock.on"
-CLOCK_BEGIN=\[
-CLOCK_END=\]
+# Datetime prompt config
+DATETIME_BEGIN=\[
+DATETIME_END=\]
+
+DATE_ON_FILE="$HOME/.bin/prompt.d/date.on"
+TIME_ON_FILE="$HOME/.bin/prompt.d/clock.on"
+
+DATE_IN_DD_MM_YYY_FORMAT="+%d-%m-%Y"
 TIME_IN_24_HOURS_HH_MM_FORMAT="+%Hh%M"
 
-function assemble_clock {
-    if [ -f "$CLOCK_ON_FILE" ]; then
-        current_time=`date $TIME_IN_24_HOURS_HH_MM_FORMAT`
+function assemble_datetime {
+    current_date=`date $DATE_IN_DD_MM_YYY_FORMAT`
+    current_time=`date $TIME_IN_24_HOURS_HH_MM_FORMAT`
 
-        echo "$NORMAL $CLOCK_BEGIN${current_time}$CLOCK_END "
+    if [[ -f "$DATE_ON_FILE" && -f "$TIME_ON_FILE" ]]; then
+        echo "$NORMAL $DATETIME_BEGIN${current_date} ${current_time}$DATETIME_END "
+    elif [ -f "$DATE_ON_FILE" ]; then
+        echo "$NORMAL $DATETIME_BEGIN${current_date}$DATETIME_END "
+    elif [ -f "$TIME_ON_FILE" ]; then
+        echo "$NORMAL $DATETIME_BEGIN${current_time}$DATETIME_END "
     else
         echo " "
     fi
@@ -78,5 +87,5 @@ else
 }
 
 function precmd() {
-    export PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt)$(assemble_clock)$YELLOW$COMMAND_BEGIN$NORMAL "
+    export PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt)$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
 }

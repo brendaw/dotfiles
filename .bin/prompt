@@ -6,10 +6,12 @@ PROMPT_CONFIG_FOLDER="$HOME/.bin/prompt.d"
 HELP_ARG="--help"
 
 CLOCK_COMMAND="clock"
+DATE_COMMAND="date"
 ON_OPTION="on"
 OFF_OPTION="off"
 
 CLOCK_ON_FILE="$PROMPT_CONFIG_FOLDER/clock.on"
+DATE_ON_FILE="$PROMPT_CONFIG_FOLDER/date.on"
 
 MODE_COMMAND="mode"
 COMPACT_OPTION="compact"
@@ -28,6 +30,8 @@ function check_args {
         help_message
     elif [[ "$1" == "$CLOCK_COMMAND" ]]; then
         clock $2
+    elif [[ "$1" == "$DATE_COMMAND" ]]; then
+        date $2
     else
         command_not_found $1
     fi
@@ -57,18 +61,57 @@ function clock_exec_on {
 }
 
 function clock_exec_off {
-    rm $CLOCK_ON_FILE
+    rm $CLOCK_ON_FILE 2> /dev/null
 }
 
 function clock_help_message {
-    echo -e "Adds a clock showing the current time after user name.\n"
-    echo -e "Example:"
-    echo -e "\t (without git info) \tcumbuca:Downloads [23h43] $"
-    echo -e "\t (with git info) \tcumbuca:some-git-repository [23h43] (10 minutes ago at master) $\n"
+    echo -e "Adds a clock showing the current time after user name, or after date if enabled.\n"
+    echo -e "Examples:"
+    echo -e "\t (without git info and date) \t\tcumbuca:Downloads [23h43] $"
+    echo -e "\t (without git info and with date) \tcumbuca:Downloads [26-04-2020 23h43] $"
+    echo -e "\t (with git info and without date) \tcumbuca:some-git-repository [23h43] (10 minutes ago at master) $"
+    echo -e "\t (with git info and date) \t\tcumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $\n"
     echo -e "Usage: prompt clock [on, off]\n"
     echo -e "Available options:\n"
     echo -e "\t on \tTo activate the clock on the prompt."
     echo -e "\t off \tTo disable the clock on the prompt.\n"
+    echo -e "Type 'prompt --help' for more info."
+}
+
+function date {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        date_help_message
+    elif [[ "$1" == "$ON_OPTION" ]]; then
+        date_exec_on
+    elif [[ "$1" == "$OFF_OPTION" ]]; then
+        date_exec_off
+    elif [ -z "$1" ]; then
+        date_help_message
+    else
+        command_not_found $DATE_COMMAND $1
+    fi
+}
+
+function date_exec_on {
+    create_config_folder
+    touch $DATE_ON_FILE
+}
+
+function date_exec_off {
+    rm $DATE_ON_FILE 2> /dev/null
+}
+
+function date_help_message {
+    echo -e "Adds a info showing the current date after user name and before clock, if enabled.\n"
+    echo -e "Examples:"
+    echo -e "\t (without git info and clock) \t\tcumbuca:Downloads [26-04-2020] $"
+    echo -e "\t (without git info and with clock) \tcumbuca:Downloads [26-04-2020 23h43] $"
+    echo -e "\t (with git info and without clock) \tcumbuca:some-git-repository [26-04-2020] (10 minutes ago at master) $"
+    echo -e "\t (with git info and clock) \t\tcumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $\n"
+    echo -e "Usage: prompt date [on, off]\n"
+    echo -e "Available options:\n"
+    echo -e "\t on \tTo activate the date on the prompt."
+    echo -e "\t off \tTo disable the date on the prompt.\n"
     echo -e "Type 'prompt --help' for more info."
 }
 
@@ -77,7 +120,8 @@ function help_message {
     echo -e "Usage: prompt <command> [option]\n"
     echo -e "Available commands:\n"
     echo -e "\t mode \tChoose if prompt enter in compact or full mode."
-    echo -e "\t clock \tChoose if shows current time after user name.\n"
+    echo -e "\t date \tChoose if shows current date after user name and before clock, if enabled."
+    echo -e "\t clock \tChoose if shows current time after user name, or after date if enabled.\n"
     echo -e "Type 'prompt <command> --help' for more info."
 }
 
