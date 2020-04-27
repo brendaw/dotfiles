@@ -27,6 +27,7 @@ GIT_NO_COMMITS="No commits"
 GIT_REPOSITORY="repository"
 
 # Mode prompt config
+MODE_MINIMAL_FILE="$HOME/.bin/prompt.d/mode.minimal"
 MODE_COMPACT_FILE="$HOME/.bin/prompt.d/mode.compact"
 
 # Datetime prompt config
@@ -104,8 +105,10 @@ function assemble_prompt {
 }
 
 function assemble_mode {
-    if [ -f "$MODE_COMPACT_FILE" ]; then
+    if [ -f "$MODE_MINIMAL_FILE" ]; then
         PS1="$NORMAL$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
+    elif [ -f "$MODE_COMPACT_FILE" ]; then
+        PS1="$NORMAL$(assemble_prompt)$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
     else
         PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt)$(assemble_datetime)$YELLOW$COMMAND_BEGIN$NORMAL "
     fi

@@ -14,9 +14,11 @@ CLOCK_ON_FILE="$PROMPT_CONFIG_FOLDER/clock.on"
 DATE_ON_FILE="$PROMPT_CONFIG_FOLDER/date.on"
 
 MODE_COMMAND="mode"
+MINIMAL_OPTION="minimal"
 COMPACT_OPTION="compact"
 FULL_OPTION="full"
 
+MODE_MINIMAL_FILE="$PROMPT_CONFIG_FOLDER/mode.minimal"
 MODE_COMPACT_FILE="$PROMPT_CONFIG_FOLDER/mode.compact"
 
 function main {
@@ -48,6 +50,8 @@ function create_config_folder {
 function mode {
     if [[ "$1" == "$HELP_ARG" ]]; then
         mode_help_message
+    elif [[ "$1" == "$MINIMAL_OPTION" ]]; then
+        mode_exec_minimal
     elif [[ "$1" == "$COMPACT_OPTION" ]]; then
         mode_exec_compact
     elif [[ "$1" == "$FULL_OPTION" ]]; then
@@ -59,26 +63,45 @@ function mode {
     fi
 }
 
-function mode_exec_compact {
+function mode_exec_minimal {
+    mode_exec_full
     create_config_folder
+
+    touch $MODE_MINIMAL_FILE
+}
+
+function mode_exec_compact {
+    mode_exec_full
+    create_config_folder
+
     touch $MODE_COMPACT_FILE
 }
 
 function mode_exec_full {
     rm $MODE_COMPACT_FILE 2> /dev/null
+    rm $MODE_MINIMAL_FILE 2> /dev/null
 }
 
 function mode_help_message {
-    echo -e "Adds a clock showing the current time after user name, or after date if enabled.\n"
-    echo -e "Examples:"
-    echo -e "\t (without git info and date) \t\tcumbuca:Downloads [23h43] $"
-    echo -e "\t (without git info and with date) \tcumbuca:Downloads [26-04-2020 23h43] $"
-    echo -e "\t (with git info and without date) \tcumbuca:some-git-repository [23h43] (10 minutes ago at master) $"
-    echo -e "\t (with git info and date) \t\tcumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $\n"
-    echo -e "Usage: prompt clock [on, off]\n"
+    echo -e "Choose if prompt enters in compact or full mode.\n"
+    echo -e "Examples: \n"
+    echo -e "\t $ "
+    echo -e "\t (minimal mode without date or clock) \n"
+    echo -e "\t [26-04-2020 23h43] $"
+    echo -e "\t (minimal mode with date or clock) \n"
+    echo -e "\t Downloads [26-04-2020 23h43] $"
+    echo -e "\t (compact mode without git info and with date or clock) \n"
+    echo -e "\t some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $"
+    echo -e "\t (compact mode with git info and date or clock) \n"
+    echo -e "\t cumbuca:Downloads [26-04-2020 23h43] $"
+    echo -e "\t (full mode without git info and with date or clock) \n"
+    echo -e "\t cumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $"
+    echo -e "\t (full mode with git info and date or clock) \n"
+    echo -e "Usage: prompt mode [minimal, compact, full]\n"
     echo -e "Available options:\n"
-    echo -e "\t on \tTo activate the clock on the prompt."
-    echo -e "\t off \tTo disable the clock on the prompt.\n"
+    echo -e "\t minimal \tTo activate minimal mode on the prompt."
+    echo -e "\t compact \tTo activate compact mode on the prompt."
+    echo -e "\t full \tTo activate full mode on the prompt.\n"
     echo -e "Type 'prompt --help' for more info."
 }
 
@@ -106,16 +129,16 @@ function clock_exec_off {
 }
 
 function clock_help_message {
-    echo -e "Choose if prompt enters in compact or full mode.\n"
+    echo -e "Adds a clock showing the current time after user name, or after date if enabled.\n"
     echo -e "Examples:"
-    echo -e "\t (compact mode without date or clock) \t\t $"
-    echo -e "\t (compact mode with date or clock) \t\t [26-04-2020 23h43] $"
-    echo -e "\t (full mode without git info and with date or clock) \tcumbuca:Downloads [26-04-2020 23h43] $"
-    echo -e "\t (full mode with git info and date or clock) \t\tcumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $\n"
-    echo -e "Usage: prompt mode [compact, full]\n"
+    echo -e "\t (without git info and date) \t\tcumbuca:Downloads [23h43] $"
+    echo -e "\t (without git info and with date) \tcumbuca:Downloads [26-04-2020 23h43] $"
+    echo -e "\t (with git info and without date) \tcumbuca:some-git-repository [23h43] (10 minutes ago at master) $"
+    echo -e "\t (with git info and date) \t\tcumbuca:some-git-repository [26-04-2020 23h43] (10 minutes ago at master) $\n"
+    echo -e "Usage: prompt clock [on, off]\n"
     echo -e "Available options:\n"
-    echo -e "\t compact \tTo activate compact mode on the prompt."
-    echo -e "\t full \tTo activate full mode on the prompt.\n"
+    echo -e "\t on \tTo activate the clock on the prompt."
+    echo -e "\t off \tTo disable the clock on the prompt.\n"
     echo -e "Type 'prompt --help' for more info."
 }
 
@@ -160,7 +183,7 @@ function help_message {
     echo -e "Prompt enhancer with simple commands.\n"
     echo -e "Usage: prompt <command> [option]\n"
     echo -e "Available commands:\n"
-    echo -e "\t mode \tChoose if prompt enters in compact or full mode."
+    echo -e "\t mode \tChoose if prompt enters in minimal, compact or full mode."
     echo -e "\t date \tChoose if shows current date after user name and before clock, if enabled."
     echo -e "\t clock \tChoose if shows current time after user name, or after date if enabled.\n"
     echo -e "Type 'prompt <command> --help' for more info."
