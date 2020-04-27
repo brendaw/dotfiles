@@ -20,5 +20,8 @@ export PATH="/usr/local/opt/qt/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/qt/lib"
 export CPPFLAGS="-I/usr/local/opt/qt/include"
 
+# Add custom scripts inside .bin
+export PATH="$PATH:$HOME/.bin"
+
 # Add all SSH keys to agent
 ssh-add -q .ssh/keys/private/*

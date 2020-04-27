@@ -7,8 +7,9 @@
 # description: defining simple prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
 # Main prompt config
-COMMAND_BEGIN=\$
 FEATURED=%m
+CURRENT_FOLDER=%1d
+COMMAND_BEGIN=\$
 
 # Git warning config
 ONE_DAY=1440
@@ -18,6 +19,22 @@ SIX_HOURS=360
 GIT_BEGIN=\(
 GIT_END=\)
 GIT_AT=\ at\ 
+
+# Clock prompt config
+CLOCK_ON_FILE="$HOME/.bin/prompt.d/clock.on"
+CLOCK_BEGIN=\[
+CLOCK_END=\]
+TIME_IN_24_HOURS_HH_MM_FORMAT="+%Hh%M"
+
+function assemble_clock {
+    if [ -f "$CLOCK_ON_FILE" ]; then
+        current_time=`date $TIME_IN_24_HOURS_HH_MM_FORMAT`
+
+        echo "$NORMAL $CLOCK_BEGIN${current_time}$CLOCK_END "
+    else
+        echo " "
+    fi
+}
 
 function relative_time_since_last_commit {
     local relative_time=`git log --pretty=format:'%ar' -n 1`
@@ -55,11 +72,11 @@ else
 
         echo ${GIT_PROMPT}
     else
-        local NORMAL_PROMPT="$GREY%1d"
+        local NORMAL_PROMPT="$GREY$CURRENT_FOLDER"
         echo $NORMAL_PROMPT
     fi
 }
 
 function precmd() {
-    PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt) $YELLOW$COMMAND_BEGIN$NORMAL "
+    export PS1="$YELLOW$FEATURED$NORMAL:$(assemble_prompt)$(assemble_clock)$YELLOW$COMMAND_BEGIN$NORMAL "
 }

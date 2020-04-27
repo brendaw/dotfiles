@@ -1,0 +1,94 @@
+#!/bin/bash
+
+ZSHRC_FILE="$HOME/.zshrc"
+PROMPT_CONFIG_FOLDER="$HOME/.bin/prompt.d"
+
+HELP_ARG="--help"
+
+CLOCK_COMMAND="clock"
+ON_OPTION="on"
+OFF_OPTION="off"
+
+CLOCK_ON_FILE="$PROMPT_CONFIG_FOLDER/clock.on"
+
+MODE_COMMAND="mode"
+COMPACT_OPTION="compact"
+FULL_OPTION="full"
+
+function main {
+    if [ -z "$1" ]; then
+        help_message
+    else
+        check_args $1 $2
+    fi
+}
+
+function check_args {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        help_message
+    elif [[ "$1" == "$CLOCK_COMMAND" ]]; then
+        clock $2
+    else
+        command_not_found $1
+    fi
+}
+
+function create_config_folder {
+    mkdir -p $PROMPT_CONFIG_FOLDER
+}
+
+function clock {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        clock_help_message
+    elif [[ "$1" == "$ON_OPTION" ]]; then
+        clock_exec_on
+    elif [[ "$1" == "$OFF_OPTION" ]]; then
+        clock_exec_off
+    elif [ -z "$1" ]; then
+        clock_help_message
+    else
+        command_not_found $CLOCK_COMMAND $1
+    fi
+}
+
+function clock_exec_on {
+    create_config_folder
+    touch $CLOCK_ON_FILE
+}
+
+function clock_exec_off {
+    rm $CLOCK_ON_FILE
+}
+
+function clock_help_message {
+    echo -e "Adds a clock showing the current time after user name.\n"
+    echo -e "Example:"
+    echo -e "\t (without git info) \tcumbuca:Downloads [23h43] $"
+    echo -e "\t (with git info) \tcumbuca:some-git-repository [23h43] (10 minutes ago at master) $\n"
+    echo -e "Usage: prompt clock [on, off]\n"
+    echo -e "Available options:\n"
+    echo -e "\t on \tTo activate the clock on the prompt."
+    echo -e "\t off \tTo disable the clock on the prompt.\n"
+    echo -e "Type 'prompt --help' for more info."
+}
+
+function help_message {
+    echo -e "Prompt enhancer with simple commands.\n"
+    echo -e "Usage: prompt <command> [option]\n"
+    echo -e "Available commands:\n"
+    echo -e "\t mode \tChoose if prompt enter in compact or full mode."
+    echo -e "\t clock \tChoose if shows current time after user name.\n"
+    echo -e "Type 'prompt <command> --help' for more info."
+}
+
+function command_not_found {
+    if [ -z "$2" ]; then
+        echo "prompt: command not found: $1"
+    else
+        echo "prompt: command $1: option not found: $2"
+    fi
+}
+
+main "$@"
+
+exit 0
