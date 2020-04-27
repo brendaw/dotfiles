@@ -6,6 +6,7 @@
 #
 # description: defining simple prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
+# Main prompt vars
 COMMAND_BEGIN=\$
 FEATURED=%m
 
