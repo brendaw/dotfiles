@@ -1,3 +1,5 @@
+# Using some configs from https://blog.scottnonnenberg.com/better-git-configuration.
+
 [user]
 	name = William Brendaw
 	email = williambrendaw@protonmail.com
@@ -6,11 +8,11 @@
 	helper = osxkeychain
 
 [alias]
+	amend = commit --amend
 	prune = fetch --prune
 	undo = reset --soft HEAD^
 	stash-all = stash save --include-untracked
 	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
-
 [merge]
 	ff = only
 	conflictstyle = diff3
