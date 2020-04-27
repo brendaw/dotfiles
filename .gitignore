@@ -1,4 +1,7 @@
+# Prompt data
 .bin/prompt.d
+
+# Programs data
 .CFUserTextEncoding
 .DS_Store
 .Trash
@@ -34,6 +37,8 @@
 .vscode-oss
 .webclipse 
 .zsh_history
+
+# Personal data
 Applications
 Desenvolvimento
 Desktop
