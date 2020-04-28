@@ -24,4 +24,4 @@ export CPPFLAGS="-I/usr/local/opt/qt/include"
 export PATH="$PATH:$HOME/.bin"
 
 # Add all SSH keys to agent
-ssh-add -q .ssh/keys/private/*
+ssh-add -q ~/.ssh/keys/private/*
