@@ -1,10 +1,4 @@
-" William Brendaw's dotfiles
-" 
-" author:  brendaw <williambrendaw@protonmail.com>
-" code:    https://github.com/brendaw/dotfiles
-" version: 0.1.0
-"
-" description: vim configuration
+" Vim configuration
 
 " Vim default config
 set nocompatible
