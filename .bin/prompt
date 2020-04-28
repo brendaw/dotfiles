@@ -5,12 +5,16 @@ PROMPT_CONFIG_FOLDER="$HOME/.bin/prompt.d"
 
 HELP_ARG="--help"
 
+GIT_COMMAND="git"
+
 CLOCK_COMMAND="clock"
 DATE_COMMAND="date"
 DATETIME_COMMAND="datetime"
+
 ON_OPTION="on"
 OFF_OPTION="off"
 
+GIT_ON_FILE="$PROMPT_CONFIG_FOLDER/git.on"
 CLOCK_ON_FILE="$PROMPT_CONFIG_FOLDER/clock.on"
 DATE_ON_FILE="$PROMPT_CONFIG_FOLDER/date.on"
 
@@ -35,6 +39,8 @@ function check_args {
         help_message
     elif [[ "$1" == "$MODE_COMMAND" ]]; then
         mode $2
+    elif [[ "$1" == "$GIT_COMMAND" ]]; then
+        git $2
     elif [[ "$1" == "$CLOCK_COMMAND" ]]; then
         clock $2
     elif [[ "$1" == "$DATE_COMMAND" ]]; then
@@ -105,6 +111,41 @@ function mode_help_message {
     echo -e "\t minimal \tTo activate minimal mode on the prompt."
     echo -e "\t compact \tTo activate compact mode on the prompt."
     echo -e "\t full \tTo activate full mode on the prompt.\n"
+    echo -e "Type 'prompt --help' for more info."
+}
+
+function git {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        git_help_message
+    elif [[ "$1" == "$ON_OPTION" ]]; then
+        git_exec_on
+    elif [[ "$1" == "$OFF_OPTION" ]]; then
+        git_exec_off
+    elif [ -z "$1" ]; then
+        git_help_message
+    else
+        command_not_found $GIT_COMMAND $1
+    fi
+}
+
+function git_exec_on {
+    create_config_folder
+    touch $GIT_ON_FILE
+}
+
+function git_exec_off {
+    rm $GIT_ON_FILE 2> /dev/null
+}
+
+function git_help_message {
+    echo -e "Choose if shows current git branch and last updated date in prompt.\n"
+    echo -e "Examples:"
+    echo -e "\t (without git info) \tcumbuca:some-git-repository $"
+    echo -e "\t (with git info)  \tcumbuca:some-git-repository (10 minutes ago at master) $"
+    echo -e "Usage: prompt git [on, off]\n"
+    echo -e "Available options:\n"
+    echo -e "\t on \tTo activate the git info on the prompt."
+    echo -e "\t off \tTo disable the git info on the prompt.\n"
     echo -e "Type 'prompt --help' for more info."
 }
 
@@ -225,9 +266,10 @@ function help_message {
     echo -e "Usage: prompt <command> [option]\n"
     echo -e "Available commands:\n"
     echo -e "\t mode \t\tChoose if prompt enters in minimal, compact or full mode."
-    echo -e "\t date \t\tChoose if shows current date after user name and before clock, if enabled."
-    echo -e "\t clock \t\tChoose if shows current time after user name, or after date if enabled."
-    echo -e "\t datetime \tToggle both clock and date, even if some of then is enabled or disabled.\n"
+    echo -e "\t git \t\tChoose if shows current git branch and last updated date in prompt."
+    echo -e "\t clock \t\tChoose if shows current time in prompt."
+    echo -e "\t date \t\tChoose if shows current date in prompt."
+    echo -e "\t datetime \tToggle both clock and date, even if some of then is enabled or disabled, in prompt.\n"
     echo -e "Type 'prompt <command> --help' for more info."
 }
 

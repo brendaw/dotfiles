@@ -19,6 +19,8 @@ ONE_DAY=1440
 SIX_HOURS=360
 
 # Git prompt config
+GIT_ON_FILE="$HOME/.bin/prompt.d/git.on"
+
 GIT_BEGIN=\(
 GIT_END=\)
 GIT_AT=\ at\ 
@@ -75,7 +77,7 @@ function assemble_prompt {
     local git_repo_folder="$(git rev-parse --show-toplevel 2>/dev/null)"
     local git_repo_name="$(echo ${git_repo_folder} | rev | cut -d/ -f1 | rev)"
     
-    if [ "$inside_git_repo" ] && [ "$git_repo_name" != $USER ] && [ "$git_repo_name" != $WORK_DIR ]; then
+    if [ "$inside_git_repo" ] && [ -f "$GIT_ON_FILE" ] && [ "$git_repo_name" != $USER ] && [ "$git_repo_name" != $WORK_DIR ]; then
         local has_any_commit_in_repo="$(git rev-list -n 1 --all 2>/dev/null)"
 
         if [ "$has_any_commit_in_repo" ]; then
