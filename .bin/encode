@@ -30,9 +30,9 @@ function help_message {
 
 function command_not_found {
     if [ -z "$2" ]; then
-        echo "prompt: command not found: $1"
+        echo "encode: command not found: $1"
     else
-        echo "prompt: command $1: option not found: $2"
+        echo "encode: command $1: option not found: $2"
     fi
 }
 
