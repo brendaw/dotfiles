@@ -50,6 +50,7 @@
     "Applications": true,
     ".webclipse": true,
     ".vscode-oss": true,
-    ".vscode": true
+    ".vscode": true,
+    ".sts4": true
   }
 }
