@@ -1,0 +1,73 @@
+#!/bin/bash
+
+PRO_FOLDER="$HOME/.bin/pro.d"
+PRO_ENV="$PRO_FOLDER/pro.env.sh"
+
+JAVA_PRO="$PRO_FOLDER/pro.java.sh"
+
+source $PRO_ENV
+
+function main {
+    if [ -z "$1" ] || [[ "$1" == "$HELP_ARG" ]]; then
+        help_message
+    elif [[ "$1" == "$REFRESH_CMD" ]]; then
+        validate $REFRESH_CMD
+    elif [[ "$1" == "$TEST_CMD" ]]; then
+        validate $TEST_CMD
+    elif [[ "$1" == "$BUILD_CMD" ]]; then
+        validate $BUILD_CMD
+    elif [[ "$1" == "$RUN_CMD" ]]; then
+        validate $RUN_CMD
+    elif [[ "$1" == "$BUILD_AND_RUN_CMD" ]]; then
+        validate $BUILD_AND_RUN_CMD
+    else
+        command_not_found $1
+    fi
+}
+
+function validate {
+    local env_to_execute
+
+    local java_validation="$($JAVA_PRO validate)"
+
+    if [ "$java_validation" ]; then
+        env_to_execute=$JAVA_PRO
+    fi
+
+    if [ "$env_to_execute" ]; then
+        . $JAVA_PRO $1
+    else
+        no_env $1
+    fi
+}
+
+function no_env {
+    echo -e "pro: $1: No environment founded in this folder.\n"
+    echo -e "Type 'pro <command> --help' for more info."
+}
+
+function help_message {
+    echo -e "Programmer's swiss knife in code craft, build, test and run.\n"
+    echo -e "Usage: pro <command> [update, test, build, run or bnr]\n"
+    echo -e "Available commands:\n"
+    echo -e "\t refresh \tBuild current repository with the latest dependencies."
+    echo -e "\t test \t\tExecute all tests from the repository."
+    echo -e "\t build \t\tClean and build the repository."
+    echo -e "\t run \t\tRun the project from the latest generated build."
+    echo -e "\t bnr \t\tBuild and run (get it?) the project in one command.\n"
+    echo -e "Type 'pro <command> --help' for more info."
+}
+
+function command_not_found {
+    if [ -z "$2" ]; then
+        echo "pro: command not found: $1"
+    else
+        echo "pro: command $1: option not found: $2"
+    fi
+}
+
+main "$@"
+
+#. $JAVA_PRO
+
+exit 0
