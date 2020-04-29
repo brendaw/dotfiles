@@ -20,6 +20,7 @@
 .gem
 .gradle
 .gtk-bookmarks
+.history
 .katana
 .local
 .m2
@@ -37,7 +38,7 @@
 .viminfo
 .vscode-oss
 .webclipse 
-.zsh_history
+.zcompdump
 
 # Personal data
 Applications
