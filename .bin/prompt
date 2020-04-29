@@ -35,7 +35,7 @@ function main {
 }
 
 function check_args {
-    if [[ "$1" == "$HELP_ARG" ]]; then
+    if [ -z "$1" ] || [[ "$1" == "$HELP_ARG" ]]; then
         help_message
     elif [[ "$1" == "$MODE_COMMAND" ]]; then
         mode $2
@@ -278,7 +278,7 @@ function command_not_found {
     if [ -z "$2" ]; then
         echo "prompt: command not found: $1"
     else
-        echo "prompt: command $1: option not found: $2"
+        echo "prompt: $1: option not found: $2"
     fi
 }
 

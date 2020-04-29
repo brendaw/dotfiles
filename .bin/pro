@@ -62,12 +62,10 @@ function command_not_found {
     if [ -z "$2" ]; then
         echo "pro: command not found: $1"
     else
-        echo "pro: command $1: option not found: $2"
+        echo "pro: $1: option not found: $2"
     fi
 }
 
 main "$@"
-
-#. $JAVA_PRO
 
 exit 0

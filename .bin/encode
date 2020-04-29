@@ -32,7 +32,7 @@ function command_not_found {
     if [ -z "$2" ]; then
         echo "encode: command not found: $1"
     else
-        echo "encode: command $1: option not found: $2"
+        echo "encode: $1: option not found: $2"
     fi
 }
 
