@@ -1,0 +1,31 @@
+{
+	"folders": [
+		{
+			"path": ".zsh"
+		},
+		{
+			"path": ".bin"
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+			"activityBar.activeBackground": "#313131",
+			"activityBar.activeBorder": "#787828",
+			"activityBar.background": "#313131",
+			"activityBar.foreground": "#e7e7e7",
+			"activityBar.inactiveForeground": "#e7e7e799",
+			"activityBarBadge.background": "#787828",
+			"activityBarBadge.foreground": "#e7e7e7",
+			"statusBar.background": "#181818",
+			"statusBar.border": "#181818",
+			"statusBar.foreground": "#e7e7e7",
+			"statusBarItem.hoverBackground": "#313131",
+			"titleBar.activeBackground": "#181818",
+			"titleBar.activeForeground": "#e7e7e7",
+			"titleBar.border": "#181818",
+			"titleBar.inactiveBackground": "#18181899",
+			"titleBar.inactiveForeground": "#e7e7e799"
+		},
+		"peacock.color": "#181818"
+	}
+}
