@@ -17,6 +17,8 @@
     cm = commit -m
     co = checkout
     cb = checkout -b
+    p = push
+    pu = !git push -u origin $(git branch --show-current)
 	amend = commit --amend
 	prune = fetch --prune
 	undo = reset --soft HEAD^
