@@ -15,7 +15,6 @@
 .config
 .devdocs 
 .docker
-.eclipse
 .emulator_console_auth_token
 .gem
 .gradle

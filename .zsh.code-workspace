@@ -1,10 +1,8 @@
 {
 	"folders": [
 		{
-			"path": ".zsh"
-		},
-		{
-			"path": ".bin"
+			"path": ".",
+			"name": "cumbuca"
 		}
 	],
 	"settings": {
