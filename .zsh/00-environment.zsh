@@ -17,3 +17,6 @@ export PATH="$PATH:$HOME/.bin"
 
 # Add all SSH keys to agent
 ssh-add -q ~/.ssh/keys/private/*
+
+# Enable all .bin scripts to run
+chmod +x .bin/*
