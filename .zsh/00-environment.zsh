@@ -19,4 +19,4 @@ export PATH="$PATH:$HOME/.bin"
 ssh-add -q ~/.ssh/keys/private/*
 
 # Enable all .bin scripts to run
-chmod +x .bin/*
+chmod +x $HOME/.bin/*
