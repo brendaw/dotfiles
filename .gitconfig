@@ -10,20 +10,28 @@
 [alias]
     a = add
     aa = add .
-    d = diff
-    s = status
+	am = commit --amend
+    b = branch
+    ba = branch -a
+    br = branch -m
+    bd = branch -D
     c = commit
     ca = commit -am
+    cb = checkout -b
     cm = commit -m
     co = checkout
-    cb = checkout -b
+    d = diff
+    l = log
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     p = push
+	pr = !git fetch --prune
     pu = !git push -u origin $(git branch --show-current)
-	amend = commit --amend
-	prune = fetch --prune
-	undo = reset --soft HEAD^
-	stash = stash save --include-untracked
-	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+    s = status
+    sa = stash apply
+    sp = stash pop
+	st = stash save --include-untracked
+	un = reset --soft HEAD^
+
 [merge]
 	ff = only
 	conflictstyle = diff3
