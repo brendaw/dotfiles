@@ -17,7 +17,7 @@ function main {
 }
 
 function validate {
-    local has_java="$(java --version) 2>/dev/null"
+    local has_java="$(java -version) 2>/dev/null"
 
     local gradlew="gradlew"
     local gradle_wrapper="gradle/wrapper/gradle-wrapper.jar"

@@ -1,0 +1,147 @@
+#!/bin/bash
+ 
+NOW_COMMAND="now"
+LIST_COMMAND="list"
+SET_COMMAND="set"
+
+BIN_ENV_PATH="/usr/local/bin"
+
+JVMS_PATH="/Library/Java/JavaVirtualMachines"
+JVM_BIN_PATH="Contents/Home/bin"
+
+ONLY_IN_BIN_ENV_PATH="Only in $BIN_ENV_PATH"
+ONLY_IN_JVMS_PATH="Only in $JVMS_PATH"
+
+function main {
+    if [ -z "$1" ]; then
+        help_message
+    else
+        check_args $1 $2
+    fi
+}
+
+function check_args {
+    if [ -z "$1" ] || [[ "$1" == "$HELP_ARG" ]]; then
+        help_message
+    elif [[ "$1" == "$NOW_COMMAND" ]]; then
+        now
+    elif [[ "$1" == "$LIST_COMMAND" ]]; then
+        list
+    elif [[ "$1" == "$SET_COMMAND" ]]; then
+        set_version $2
+    else
+        command_not_found $1
+    fi
+}
+
+function has_java_env {
+    if [ -d $JVMS_PATH ] && [ "$(ls -A $JVMS_PATH)" ]; then
+        echo "true"
+    else
+        echo ""
+    fi
+}
+
+function java_envs {
+    echo "$(ls $JVMS_PATH)"
+}
+
+function clean_java_entries_from_env {
+    for java_env in `java_envs`; do
+        local java_env_bin=$JVMS_PATH/$java_env/$JVM_BIN_PATH
+        local java_env_jvm_bins_diff="$(diff --no-dereference $BIN_ENV_PATH $java_env_bin | grep -vE "($ONLY_IN_BIN_ENV_PATH|$ONLY_IN_JVMS_PATH)" | cut -d " " -f 2)"
+
+        for file in $java_env_jvm_bins_diff; do
+            rm -rf $file
+        done
+    done
+}
+
+function create_java_entries_in_env {
+    local java_env_from_arg=$1
+    local java_env_from_arg_bin=$JVMS_PATH/$java_env_from_arg/$JVM_BIN_PATH
+                
+    for file in $(ls $java_env_from_arg_bin); do
+       ln -s $java_env_from_arg_bin/$file $BIN_ENV_PATH/$file
+    done
+}
+
+function now {
+    local java_version="$(java --version)"
+
+    if [ "$java_version" ]; then
+        echo -e "$java_version"
+    else
+        echo -e "java-env: No java environment enabled in the system."
+    fi
+}
+
+function list {
+    if [ "$(has_java_env)" ]; then
+        echo -e "$(java_envs)"
+    else
+        no_java_env_message
+    fi
+}
+
+function set_version {
+    if [ "$(has_java_env)" ]; then
+        if [ -z "$1" ]; then
+            set_version_help_message
+        else
+            local java_env_from_arg="$(java_envs | grep $1 2>/dev/null)"
+            
+            if [ -z "$java_env_from_arg" ]; then
+                echo -e "java-env: Could not find java environment for arg given: $1"
+                echo -e "java-env: Available environments:"
+
+                echo -e "\n$(java_envs)\n"
+            else
+                clean_java_entries_from_env
+                create_java_entries_in_env $java_env_from_arg
+
+                echo -e "java-env: Successfully java env changed to $java_env_from_arg"
+            fi
+        fi
+    else
+        no_java_env_message
+    fi
+}
+
+function set_version_help_message {
+    echo -e "Choose which Java version will be enabled in the environment.\n"
+    echo -e "Usage: java-env set [version]\n"
+    echo -e "Available option:\n"
+    echo -e "\tversion \t\tThe Java version to be active in the environment.\n"
+    echo -e "Examples:\n"
+    echo -e "\t$ java-env set 11 \t(to enable Java 11)"
+    echo -e "\t$ java-env set 1.8 \t(to enable Java 1.8)\n"
+    echo -e "Type 'java-env --help' for more info."
+}
+
+function no_java_env_message {
+    echo -e "java-env: No java environment installed in the system."
+}
+
+function help_message {
+    echo -e "A simple java environments manager.\n"
+    echo -e "Usage: java-env <command> [option]\n"
+    echo -e "Available commands:\n"
+    echo -e "\t now \t\tShow current java environment enabled."
+    echo -e "\t list \t\tLists all java environments available."
+    echo -e "\t set [version] \t\tChange java environment to the given version.\n"
+    echo -e "Type 'java-env <command> --help' for more info."
+}
+
+
+function command_not_found {
+    if [ -z "$2" ]; then
+        echo "java-env: command not found: $1"
+    else
+        echo "java-env: $1: option not found: $2"
+    fi
+}
+
+main "$@"
+
+exit 0
