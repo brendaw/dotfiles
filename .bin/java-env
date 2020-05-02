@@ -67,10 +67,11 @@ function create_java_entries_in_env {
 }
 
 function now {
-    local java_version="$(java --version)"
+    local java_version=$(((java -version) 2>&1) | grep "java version" | cut -d "\"" -f 2 )
+
 
     if [ "$java_version" ]; then
-        echo -e "$java_version"
+        echo -e "java-env: now: $java_version"
     else
         echo -e "java-env: No java environment enabled in the system."
     fi

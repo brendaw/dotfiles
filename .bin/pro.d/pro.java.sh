@@ -17,7 +17,7 @@ function main {
 }
 
 function validate {
-    local has_java="$(java -version) 2>/dev/null"
+    local has_java=$(((java -version) 2>&1) | grep "java version" | cut -d "\"" -f 2 )
 
     local gradlew="gradlew"
     local gradle_wrapper="gradle/wrapper/gradle-wrapper.jar"
@@ -50,9 +50,9 @@ function build {
 function run {
     echo -e "pro: run: Run executable of $CURRENT_FOLDER from last successful build.\n"
 
-    local root_project_name="$(grep -w "rootProject.name" settings.gradle | cut -d "'" -f 2)"
+    local root_project_name="$(ls build/libs)"
 
-    java -jar -Dspring.profiles.active=local build/libs/$root_project_name.jar
+    java -jar -Dspring.profiles.active=local build/libs/$root_project_name
 }
 
 function build_and_run {
