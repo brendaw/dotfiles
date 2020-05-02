@@ -1,0 +1,52 @@
+#!/bin/bash
+
+HELP_ARG="--help"
+
+UPDATE_CMD="update"
+
+function main {
+    if [ -z "$1" ] || [[ "$1" == "$HELP_ARG" ]]; then
+        help_message
+    else
+        check_args $1 $2
+    fi
+}
+
+function check_args {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        help_message
+    elif [[ "$1" == "$UPDATE_CMD" ]]; then
+        update
+    else
+        command_not_found $1
+    fi
+}
+
+function update {
+    echo -e "dot: Running brew/brew cask update and upgrade"
+
+    brew update
+    brew upgrade
+
+    brew cask upgrade
+}
+
+function help_message {
+    echo -e "Dotfiles and system helper.\n"
+    echo -e "Usage: dot <command>\n"
+    echo -e "Available commands:\n"
+    echo -e "\t update \tUpdates brew and brew cask.\n"
+    echo -e "Type 'dot <command> --help' for more info."
+}
+
+function command_not_found {
+    if [ -z "$2" ]; then
+        echo "dot: command not found: $1"
+    else
+        echo "dot: $1: option not found: $2"
+    fi
+}
+
+main "$@"
+
+exit 0
