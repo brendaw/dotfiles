@@ -46,6 +46,7 @@
     p = push
 	pr = !git fetch --prune
     pu = !git push -u origin $(git branch --show-current)
+	rs = restore --staged
     s = status
     sa = stash apply
     sp = stash pop
