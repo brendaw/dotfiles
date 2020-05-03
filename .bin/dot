@@ -3,6 +3,10 @@
 HELP_ARG="--help"
 
 UPDATE_CMD="update"
+PWD_CMD="pwd"
+
+WORK_DIR="Work"
+GIT_ON_FILE="$HOME/.bin/prompt.d/git.on"
 
 function main {
     if [ -z "$1" ] || [[ "$1" == "$HELP_ARG" ]]; then
@@ -17,6 +21,8 @@ function check_args {
         help_message
     elif [[ "$1" == "$UPDATE_CMD" ]]; then
         update
+    elif [[ "$1" == "$PWD_CMD" ]]; then
+        pwd
     else
         command_not_found $1
     fi
@@ -31,11 +37,25 @@ function update {
     brew cask upgrade
 }
 
+function pwd {
+    local inside_git_repo="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+    
+    local git_repo_folder="$(git rev-parse --show-toplevel 2>/dev/null)"
+    local git_repo_name="$(echo ${git_repo_folder} | rev | cut -d/ -f1 | rev)"
+    
+    if [ "$inside_git_repo" ] && [ -f "$GIT_ON_FILE" ] && [ "$git_repo_name" != $USER ] && [ "$git_repo_name" != $WORK_DIR ]; then
+        echo -e "git:$git_repo_name$(/bin/pwd | awk -v pattern="$git_repo_name" '{split($0,a,pattern); print a[2]}')"        
+    else
+        /bin/pwd
+    fi
+}
+
 function help_message {
     echo -e "Dotfiles and system helper.\n"
     echo -e "Usage: dot <command>\n"
     echo -e "Available commands:\n"
     echo -e "\t update \tUpdates brew and brew cask.\n"
+    echo -e "\t pwd \tImproved pwd in git repositories\n"
     echo -e "Type 'dot <command> --help' for more info."
 }
 

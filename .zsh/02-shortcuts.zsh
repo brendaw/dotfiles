@@ -4,3 +4,5 @@ bindkey "[D" backward-word
 bindkey "[C" forward-word
 bindkey "^[a" beginning-of-line
 bindkey "^[e" end-of-line
+
+alias pwd='$HOME/.bin/dot pwd'
