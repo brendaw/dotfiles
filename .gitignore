@@ -10,6 +10,7 @@
 .bash_history
 .bash_sessions
 .bundle 
+.dbshell
 .cache
 .cisco 
 .config
@@ -23,6 +24,7 @@
 .katana
 .local
 .m2
+.mongorc.js
 .mysql_history 
 .oracle_jre_usage
 .p2

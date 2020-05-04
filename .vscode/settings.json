@@ -51,6 +51,8 @@
     ".webclipse": true,
     ".vscode-oss": true,
     ".vscode": true,
-    ".sts4": true
+    ".sts4": true,
+    ".dbshell": true,
+    ".mongorc.js": true
   }
 }
