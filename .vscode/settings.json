@@ -53,6 +53,7 @@
     ".vscode": true,
     ".sts4": true,
     ".dbshell": true,
-    ".mongorc.js": true
+    ".mongorc.js": true,
+    "Virtual Machines.localized": true
   }
 }
