@@ -10,13 +10,13 @@ source $PRO_ENV
 function main {
     if [ -z "$1" ] || [[ "$1" == "$HELP_ARG" ]]; then
         help_message
-    elif [[ "$1" == "$REFRESH_CMD" ]]; then
+    elif [[ "$1" == "$REFRESH_CMD" ]] || [[ "$1" == "$REFRESH_SHORT_CMD" ]]; then
         validate $REFRESH_CMD
-    elif [[ "$1" == "$TEST_CMD" ]]; then
+    elif [[ "$1" == "$TEST_CMD" ]] || [[ "$1" == "$TEST_SHORT_MD" ]]; then
         validate $TEST_CMD
-    elif [[ "$1" == "$BUILD_CMD" ]]; then
+    elif [[ "$1" == "$BUILD_CMD" ]] || [[ "$1" == "$BUILD_SHORT_CMD" ]]; then
         validate $BUILD_CMD
-    elif [[ "$1" == "$RUN_CMD" ]]; then
+    elif [[ "$1" == "$RUN_CMD" ]] || [[ "$1" == "$RUN_SHORT_CMD" ]]; then
         validate $RUN_CMD
     elif [[ "$1" == "$BUILD_AND_RUN_CMD" ]]; then
         validate $BUILD_AND_RUN_CMD
@@ -48,13 +48,13 @@ function no_env {
 
 function help_message {
     echo -e "Programmer's swiss knife in code craft, build, test and run.\n"
-    echo -e "Usage: pro <command> [update, test, build, run or bnr]\n"
+    echo -e "Usage: pro <command> [refresh, rs], [test, t], [build, b], [run,r] or [br]\n"
     echo -e "Available commands:\n"
-    echo -e "\t refresh \tBuild current repository with the latest dependencies."
-    echo -e "\t test \t\tExecute all tests from the repository."
-    echo -e "\t build \t\tClean and build the repository."
-    echo -e "\t run \t\tRun the project from the latest generated build."
-    echo -e "\t bnr \t\tBuild and run (get it?) the project in one command.\n"
+    echo -e "\t refresh, rs \tBuild current repository with the latest dependencies."
+    echo -e "\t test, t \t\tExecute all tests from the repository."
+    echo -e "\t build, b \t\tClean and build the repository."
+    echo -e "\t run, r \t\tRun the project from the latest generated build."
+    echo -e "\t br \t\tBuild and run (get it?) the project in one command.\n"
     echo -e "Type 'pro <command> --help' for more info."
 }
 
