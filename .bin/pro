@@ -4,6 +4,7 @@ PRO_FOLDER="$HOME/.bin/pro.d"
 PRO_ENV="$PRO_FOLDER/pro.env.sh"
 
 JAVA_PRO="$PRO_FOLDER/pro.java.sh"
+ZOLA_PRO="$PRO_FOLDER/pro.zola.sh"
 
 source $PRO_ENV
 
@@ -29,13 +30,18 @@ function validate {
     local env_to_execute
 
     local java_validation="$($JAVA_PRO validate)"
+    local zola_validation="$($ZOLA_PRO validate)"
 
     if [ "$java_validation" ]; then
         env_to_execute=$JAVA_PRO
     fi
 
+    if [ "$zola_validation" ]; then
+        env_to_execute=$ZOLA_PRO
+    fi
+
     if [ "$env_to_execute" ]; then
-        . $JAVA_PRO $1
+        . $env_to_execute $1
     else
         no_env $1
     fi
