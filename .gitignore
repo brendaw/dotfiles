@@ -1,5 +1,6 @@
 # Prompt data
 .bin/prompt.d
+.env/
 
 # Programs data
 .CFUserTextEncoding
@@ -16,6 +17,7 @@
 .config
 .devdocs 
 .docker
+.eclipse
 .emulator_console_auth_token
 .gem
 .gradle
@@ -30,6 +32,7 @@
 .p2
 .psql_history
 .putty
+.python_history
 .ssh
 .sonarlint
 .sts4 
