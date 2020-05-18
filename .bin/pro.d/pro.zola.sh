@@ -43,7 +43,7 @@ function build {
 function run {
     echo -e "pro: run: Run server of $CURRENT_FOLDER.\n"
 
-    local network_host=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | awk '{print $2}')
+    local network_host=$(ifconfig | grep "inet " | grep -Fv 127.0.0.1 | grep 192.168 | awk '{print $2}')
 
     zola serve --interface 0.0.0.0 --base-url $network_host
 }
