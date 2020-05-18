@@ -41,7 +41,7 @@
     cm = commit -m
     co = checkout
     d = diff
-    l = log
+	l = log --pretty=format:'* %C(yellow)%h%Creset  %<(14)%Cgreen%ar%Creset  %Cblue%an%Creset  %s'
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
     p = push
 	pr = !git fetch --prune
