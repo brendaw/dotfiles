@@ -30,8 +30,6 @@ function refresh {
 
 function test {
     echo -e "pro: test: Zola does not need tests of any kind.\n"
-
-    ./gradlew test
 }
 
 function build {
