@@ -41,7 +41,8 @@
 .vim 
 .viminfo
 .vscode-oss
-.webclipse 
+.webclipse
+.zcompcache
 .zcompdump
 
 # Personal data
@@ -51,12 +52,15 @@ Desktop
 Documentos
 Documents
 Downloads
+Games
+Jobs
 Library
 Movies
 Music
 OneDrive
 Pictures
+Projetos
 Public
 Repos
-Virtual Machines*
+VirtualBox VMs
 Work
