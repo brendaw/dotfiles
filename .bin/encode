@@ -3,9 +3,13 @@
 
 HELP_ARG="--help"
 
+X265_ARG="x265"
+
 function main {
     if [ -z "$1" ]; then
         help_message
+    elif [[ "$1" == "$X265_ARG" ]]; then
+        x265 $2
     else
         check_args $1 $2
     fi
@@ -19,12 +23,16 @@ function check_args {
     fi
 }
 
+function x265 {
+    echo -e "encode: x265: Will enconde files in x265."
+}
+
 function help_message {
     echo -e "File encoder for the given formats.\n"
     echo -e "Usage: encode <command> [file, folder or pattern]\n"
     echo -e "Available commands:\n"
-    echo -e "\t x265 \tEncodes all the files, folder or pattern given to x265."
-    echo -e "\t mp3 \tEncodes all the files, folder or pattern given to mp3.\n"
+    echo -e "\t x265 \tEncodes all the files, folder or pattern given to x265.\n"
+    #echo -e "\t mp3 \tEncodes all the files, folder or pattern given to mp3.\n"
     echo -e "Type 'encode <command> --help' for more info."
 }
 
