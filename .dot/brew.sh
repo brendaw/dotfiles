@@ -9,6 +9,12 @@ brew install python
 # Install Linode CLI
 pip3 install linode-cli --upgrade
 
+# Install Exercism
+brew install exercism
+
+exercism configure --token=409b2b5a-7d70-453d-b573-6e4fd6a18734
+exercism configure --workspace $HOME/Projetos/Exercism
+
 # Install community versions of Mongo db and compass
 brew tap mongodb/brew
 
