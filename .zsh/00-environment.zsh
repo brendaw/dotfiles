@@ -7,8 +7,11 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 # Add Ruby brew
 export PATH=/usr/local/opt/ruby/bin:$PATH
 
-#Add Gem path
+# Add Gem path
 export PATH=/usr/local/lib/ruby/gems/2.7.0/bin:$PATH
+
+# Add Rust path
+source $HOME/.cargo/env
 
 # Add Qt
 export PATH="/usr/local/opt/qt/bin:$PATH"
