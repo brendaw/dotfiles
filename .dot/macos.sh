@@ -8,6 +8,9 @@ rustup self update
 rustup component add rustfmt
 rustup component add clippy
 
+# Install Diagrams
+pip3 install diagrams
+
 # Disable recent apps from Dock
 defaults write com.apple.dock show-recents -bool false
 

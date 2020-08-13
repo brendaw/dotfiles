@@ -15,6 +15,9 @@ brew install exercism
 exercism configure --token=409b2b5a-7d70-453d-b573-6e4fd6a18734
 exercism configure --workspace $HOME/Projetos/Exercism
 
+# Install Graphviz
+brew install graphviz
+
 # Install community versions of Mongo db and compass
 brew tap mongodb/brew
 
