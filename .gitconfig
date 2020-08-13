@@ -71,3 +71,5 @@
 
 [includeIf "gitdir:~/Work/"]
 	path = ~/Work/.gitconfig
+[advice]
+	addIgnoreFile = false
