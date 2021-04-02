@@ -7,11 +7,9 @@ set shell=/bin/zsh
 
 " Vim Format
 setlocal ruler
-set columns=78
 set number
 set cursorline
 set title
-set titlelen=73
 
 " Save & Temp file (swap)
 set autowrite
