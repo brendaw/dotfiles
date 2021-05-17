@@ -111,6 +111,8 @@ function assemble_mode {
 
 function precmd() {
     assemble_mode
-
     export PS1
+
+    # Make iTerm update tab name with current folder and running program
+    echo -ne "\e]1;${PWD##*/}\a"
 }
