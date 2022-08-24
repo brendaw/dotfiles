@@ -11,6 +11,10 @@ export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/b
 # Add Gem path
 #export PATH=/usr/local/lib/ruby/gems/2.7.0/bin:$PATH
 
+# Add custom gem path
+export GEM_HOME=$HOME/.gems
+export PATH=$HOME/.gems/bin:$PATH
+
 # Add RVM path
 export PATH=$HOME/.rvm/bin:$PATH
 source ~/.rvm/scripts/rvm
@@ -32,7 +36,7 @@ export PATH="/usr/local/opt/qt/bin:$PATH"
 export PATH="$PATH:$HOME/.bin"
 
 # Add all SSH keys to agent
-ssh-add -q ~/.ssh/keys/private/*
+#ssh-add -q ~/.ssh/keys/private/*
 
 # Enable all .bin scripts to run
 chmod +x $HOME/.bin/*
