@@ -1,0 +1,53 @@
+#!/bin/bash
+# ffmpeg -i h264Input.mp4 -c:v libx265 -crf 16 -c:a copy h265output.mp4
+
+SCRIPT_NAME="video-download"
+
+HELP_ARG="--help"
+
+TWITTER_ARG="twitter"
+
+function main {
+    if [ -z "$1" ]; then
+        help_message
+    elif [[ "$1" == "$TWITTER_ARG" ]]; then
+        twitter $2
+    else
+        check_args $1 $2
+    fi
+}
+
+function check_args {
+    if [[ "$1" == "$HELP_ARG" ]]; then
+        help_message
+    else
+        command_not_found $1
+    fi
+}
+
+function twitter {
+    echo -e "$SCRIPT_NAME: twitter: Will download twitter video."
+
+    curl -s $1 > twitter.txt
+}
+
+function help_message {
+    echo -e "File encoder for the given formats.\n"
+    echo -e "Usage: encode <command> [file, folder or pattern]\n"
+    echo -e "Available commands:\n"
+    echo -e "\t x265 \tEncodes all the files, folder or pattern given to x265.\n"
+    #echo -e "\t mp3 \tEncodes all the files, folder or pattern given to mp3.\n"
+    echo -e "Type 'encode <command> --help' for more info."
+}
+
+function command_not_found {
+    if [ -z "$2" ]; then
+        echo "$SCRIPT_NAME: command not found: $1"
+    else
+        echo "$SCRIPT_NAME: $1: option not found: $2"
+    fi
+}
+
+main "$@"
+
+exit 0
