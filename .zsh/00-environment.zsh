@@ -25,6 +25,7 @@ export PATH="/usr/local/opt/qt/bin:$PATH"
 export PATH="$PATH:$HOME/.bin"
 
 # Add all SSH keys to agent
+eval "$(ssh-agent -s)"
 ssh-add -q ~/.ssh/*
 
 # Enable all .bin scripts to run
