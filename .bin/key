@@ -1,12 +1,12 @@
 #!/bin/bash
 
 email=$1
-name=$1
+name=$2
 
 key_type=ed25519
 key_location=/home/$USER/.ssh/"$name"_"$key_type"
 
-if [ -z "$email" ] || [ -z "$name" ]: then
+if [ -z "$email" ] || [ -z "$name" ]; then
     echo "error: No email or name informed to generate SSH key."
     echo "hint: Run \"key [email] [key name]\" to generate a $key_type key at /home/USER/.ssh/[key_name]_$key_type."
 else
