@@ -10,6 +10,10 @@ export PATH=$HOME/.gems/bin:$PATH
 export PATH=$HOME/.rvm/bin:$PATH
 source ~/.rvm/scripts/rvm
 
+# Add Deno path
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # Add LLVM path
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
