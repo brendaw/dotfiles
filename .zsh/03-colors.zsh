@@ -8,7 +8,9 @@ RED='%F{001}'
 GREEN='%F{002}'
 YELLOW='%F{003}'
 NORMAL='%F{015}'
-GREY='%F{252}'
+LIGHT_GRAY='%F{252}'
+GRAY='%F{250}'
+DARK_GRAY='%F{008}'
 
 # Get all the colors spectrum in terminal
 function spectrum_ls() {
