@@ -1,5 +1,7 @@
 # Defining simple and improving prompt layout, highly inspired in gary bernhardt prompt -> https://github.com/garybernhardt/dotfiles/blob/master/.bashrc
 
+DISABLE_AUTO_TITLE="true"
+
 # Main prompt config
 FEATURED=%m
 
@@ -112,6 +114,5 @@ function precmd() {
     assemble_mode
     export PS1
 
-    # Make iTerm update tab name with current folder and running program
-    echo -ne "\e]1;${PWD##*/}\a"
+    echo -en "\e]2;$(pwd)\a"
 }
