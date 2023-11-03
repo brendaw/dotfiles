@@ -6,9 +6,11 @@ export PATH="/usr/local/sbin:$PATH"
 export GEM_HOME=$HOME/.gems
 export PATH=$HOME/.gems/bin:$PATH
 
-# Add RVM path
-export PATH=$HOME/.rvm/bin:$PATH
-source ~/.rvm/scripts/rvm
+# Add RVM path, if exists
+if [ -d "$HOME/.rvm/bin" ]; then
+    export PATH=$HOME/.rvm/bin:$PATH
+    source ~/.rvm/scripts/rvm
+fi
 
 # Add Deno path
 export DENO_INSTALL="$HOME/.deno"
@@ -19,8 +21,10 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
-# Add Rust path
-source $HOME/.cargo/env
+# Add Rust path, if exists
+if [ -d "$HOME/.cargo/env" ]; then
+    source $HOME/.cargo/env
+fi
 
 # Add Qt
 export PATH="/usr/local/opt/qt/bin:$PATH"
